@@ -2,23 +2,39 @@ package com.example.demo.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Project {
+	
+	@SuppressWarnings("unused")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@NotBlank(message = "Project name is required")
 	private String projectName;
+	@NotBlank(message = "Project identifier is required")
+	@Size(min=4,max=5,message = "project identifier name should be between 4 to 5 characters")
+	@Column(updatable = false,unique = true)
 	private String projectIdentifier;
+	@NotBlank(message = "project description is required")
 	private String projectDescription;
+	@JsonFormat(pattern ="yyy-MM-dd")
 	private Date start_date;
+	@JsonFormat(pattern ="yyy-MM-dd")
 	private Date end_date;
+	@JsonFormat(pattern ="yyy-MM-dd")
 	private Date created_at ;
+	@JsonFormat(pattern ="yyy-MM-dd")
 	private Date update_at;
 	public Project() {
 		// TODO Auto-generated constructor stub
@@ -65,7 +81,7 @@ public class Project {
 	}
 	@PreUpdate
 	protected void onUpdate() {
-		this.created_at=new Date();
+		this.update_at=new Date();
 	}
 	
 
