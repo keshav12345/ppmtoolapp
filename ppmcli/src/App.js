@@ -6,9 +6,12 @@ import Header from './component/layout/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import AddProject from './component/Project/AddProject'
+import {Provider} from 'react-redux';
+import store from './store';
 
 function App() {
   return (
+    <Provider store={store}>
     <Router>
         <div>
     <Header/>
@@ -16,6 +19,7 @@ function App() {
     <Route exact path="/dashboard" component={Dashboard}/>
     <Route exact path="/addProject" component={AddProject}/>
     </Router>
+    </Provider>
       );
 }
 
